@@ -80,14 +80,21 @@ class DataAugmentation:
         #image.save(str(dst_image_path))
         cv2.imwrite(str(dst_image_path), open_cv_image)
 
-    def _check_range(self, range):
+    def _check_range(self, range, assert_positive=False):
         range = sorted(tuple(range))
         if len(range) == 1:
             range = (-range[0], range[0])
+
+        if assert_positive:
+            range = self._assure_positive_range(range)
+
         return range
 
     def _clamp_value(self, val, min_val, max_val):
         return max(min(val, max_val), min_val)
+
+    def _assure_positive_range(self, range):
+        return (max(0, range[0]), max(0, range[1]))
 
     def _swap_value_in_increasing_order(self, box, i, j):
         if box[min(i, j)] > box[max(i, j)]:
@@ -173,7 +180,7 @@ class DataAugmentation:
         return self.transform(image, shear_params)
 
     def random_scale(self, image, scale_range=SCALE_RANGE):
-        scale_range = self._check_range(scale_range)
+        scale_range = self._check_range(scale_range, assert_positive=True)
         scale_value = random.uniform(scale_range[0], scale_range[1])
 
         scale_params = (scale_value, 0, 0, 0, scale_value, 0)
@@ -186,21 +193,21 @@ class DataAugmentation:
         return image.transpose(method=Image.Transpose.FLIP_TOP_BOTTOM)
 
     def random_hue(self, image, hue_factor_range=HUE_FACTOR_RANGE):
-        hue_factor_range = self._check_range(hue_factor_range)
+        hue_factor_range = self._check_range(hue_factor_range, assert_positive=True)
         hue_factor = random.uniform(hue_factor_range[0], hue_factor_range[1])
 
         enhanced_image = ImageEnhance.Color(image)
         return enhanced_image.enhance(hue_factor)
 
     def random_brightness(self, image, brightness_factor_range=BRIGHTNESS_FACTOR_RANGE):
-        brightness_factor_range = self._check_range(brightness_factor_range)
+        brightness_factor_range = self._check_range(brightness_factor_range, assert_positive=True)
         brightness_factor = random.uniform(brightness_factor_range[0], brightness_factor_range[1])
 
         enhanced_image = ImageEnhance.Brightness(image)
         return enhanced_image.enhance(brightness_factor)
 
     def random_saturation(self, image, saturation_factor_range=SATURATION_FACTOR_RANGE):
-        saturation_factor_range = self._check_range(saturation_factor_range)
+        saturation_factor_range = self._check_range(saturation_factor_range, assert_positive=True)
         saturation_factor = random.uniform(saturation_factor_range[0], saturation_factor_range[1])
 
         enhanced_image = ImageEnhance.Contrast(image)
