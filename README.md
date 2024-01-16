@@ -76,3 +76,16 @@ SATURATION_FACTOR_RANGE = (0.5, 1.5)
 ```
 
 Below are the explanations for each parameter:
+
+| Parameter | Type | Accepted values | Explanation |
+|-----|-----|-----|-----|
+| `CROP_SIZE` | `tuple(int, int)` | Should be positive | The maximum size `(width, height)` of the cropped region. A random size (not necessarily square) smaller than this value will be randomly chosen. |
+| `ROTATION_RANGE` | `tuple(float, float)` | - | The possible range `(min_angle, max_angle)` for the rotation range, in degrees. A positive angle corresponds to a counterclockwise rotation. A random angle in this range will be randomly chosen. |
+| `HORIZONTAL_TRANSLATION_RANGE` | `tuple(int, int)` | - | The possible range `(min_x, max_x)` for the translation range along the X-axis, in pixels. A positive value corresponds to a tanslation to the right. A random value in this range will be randomly chosen. |
+| `VERTICAL_TRANSLATION_RANGE` | `tuple(int, int)` | - | The possible range `(min_y, max_y)` for the translation range along the Y-axis, in pixels. A positive value corresponds to a tanslation to the bottom. A random value in this range will be randomly chosen. |
+| `HORIZONTAL_SHEAR_RANGE` | `tuple(float, float)` | - | The possible range `(min_x, max_x)` for the shear range along the X-axis. A positive value corresponds to a displacement to the right. A random value in this range will be randomly chosen. |
+| `VERTICAL_SHEAR_RANGE` | `tuple(float, float)` | - | The possible range `(min_y, max_y)` for the shear range along the Y-axis. A positive value corresponds to a displacement to the bottom. A random value in this range will be randomly chosen. |
+| `SCALE_RANGE` | `tuple(float, float)` | Should be positive | The possible range `(min_scale, max_scale)` for the image scaling range. The same scaling factor is applied to both axis. A value bigger than 1 enlarges the image. A random value in this range will be randomly chosen. |
+| `HUE_FACTOR_RANGE` | `tuple(float, float)` | Should be positive | The possible range `(min_hue, max_hue)` for the hue (color) alteration factor range. A value bigger than 1 means more color. A random value in this range will be randomly chosen. |
+| `BRIGHTNESS_FACTOR_RANGE` | `tuple(float, float)` | Should be positive | The possible range `(min_brightness, max_brightness)` for the brightness alteration factor range. A value bigger than 1 means brighter. A random value in this range will be randomly chosen. |
+| `SATURATION_FACTOR_RANGE` | `tuple(float, float)` | Should be positive | The possible range `(min_saturation, max_saturation)` for the saturation (contrast) alteration factor range. A value bigger than 1 means more contrast. A random value in this range will be randomly chosen. |
